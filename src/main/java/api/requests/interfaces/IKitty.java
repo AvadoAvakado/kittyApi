@@ -10,9 +10,5 @@ public interface IKitty {
 
     JsonElement getRandomKitty() throws IOException;
 
-    String getKittyImageUrl(JsonElement kittyJsonObject);
-
-    String getKittyImageId(JsonElement kittyJsonObject);
-
     List<BreedInfo> getAllBreeds();
 }

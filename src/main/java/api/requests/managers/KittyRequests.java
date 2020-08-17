@@ -1,6 +1,8 @@
 package api.requests.managers;
 
+import api.Enums.Categories;
 import api.Enums.PropertyFiles;
+import api.kittymodels.Kitty;
 import api.requests.interfaces.IKitty;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -104,34 +106,24 @@ public class KittyRequests implements IKitty {
         return requireJsonArray(getResponseBody(executeRequest(request)));
     }
 
-    /**
-     * Method finds kitty image url in @kittyJsonOElement and returns it
-     * @param kittyJsonElement
-     * @return
-     */
-    @Override
-    public String getKittyImageUrl(JsonElement kittyJsonElement) {
-        return kittyJsonElement.getAsJsonObject()
-                .get("url")
-                .getAsString();
+    public BreedInfo getBreedInfo(String breedId) {
+        HttpUrl urlWithQueryParameter = Objects.requireNonNull(HttpUrl.parse(propertiesUtil.getValueByKey("kittySearchUrl")))
+                .newBuilder().addQueryParameter("breed_id", breedId)
+                .build();
+        Request request = getBuilderWithDefaultHeaders(urlWithQueryParameter).build();
+        return gson.fromJson(requireJsonArray(getResponseBody(executeRequest(request))).get(0), BreedInfo.class);
     }
 
-    /**
-     * Method finds kitty image id in @kittyJsonObject and returns it
-     * @param kittyJsonElement
-     * @return
-     */
-    @Override
-    public String getKittyImageId(JsonElement kittyJsonElement) {
-        return kittyJsonElement.getAsJsonObject()
-                .get("id")
-                .getAsString();
+    public List<Kitty> getKittiesByCategory(int numberOfKitties, Categories categories) {
+        HttpUrl urlWithQueryParameter = Objects.requireNonNull(HttpUrl.parse(propertiesUtil.getValueByKey("kittySearchUrl")))
+                .newBuilder().addQueryParameter("limit", String.valueOf(numberOfKitties))
+                .addQueryParameter("category_ids", String.valueOf(categories.getId()))
+                .build();
+        Request request = getBuilderWithDefaultHeaders(urlWithQueryParameter).build();
+        return StreamSupport.stream(requireJsonArray(getResponseBody(executeRequest(request))).spliterator(), true)
+                .map(kitty -> gson.fromJson(kitty, Kitty.class)).collect(Collectors.toList());
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public List<BreedInfo> getAllBreeds() {
         Request request = getBuilderWithDefaultHeaders(propertiesUtil.getValueByKey("kittyBreedsListUrl"))
