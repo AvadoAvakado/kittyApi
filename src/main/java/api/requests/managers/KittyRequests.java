@@ -75,7 +75,7 @@ public class KittyRequests extends RequestManager implements IKitty {
         Request request = getBuilderWithDefaultHeaders(propertiesUtil.getValueByKey("kittyBreedsListUrl"))
                 .get().build();
         Response response = executeRequest(request);
-        return StreamSupport.stream(getResponseBody(response).getAsJsonArray().spliterator(), true)
+        return StreamSupport.stream(requireJsonArray(getResponseBody(response)).spliterator(), true)
                 .map(breed -> gson.fromJson(breed, BreedInfo.class)).collect(Collectors.toList());
     }
 
@@ -115,7 +115,7 @@ public class KittyRequests extends RequestManager implements IKitty {
         HttpUrl voteUrl = Objects.requireNonNull(HttpUrl.parse(String.format("%s/%s",
                 propertiesUtil.getValueByKey("kittyVotesUrl"), voteId)));
         Request request = getBuilderWithDefaultHeaders(voteUrl).delete().build();
-        executeRequest(request);
+        executeRequest(request).close();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class KittyRequests extends RequestManager implements IKitty {
         HttpUrl urlVotesList = Objects.requireNonNull(HttpUrl.parse(propertiesUtil.getValueByKey("kittyVotesUrl")));
         RequestBody requestBody = RequestBody.create(JSON, gson.toJson(vote));
         Request request = getBuilderWithDefaultHeaders(urlVotesList).post(requestBody).build();
-        executeRequest(request);
+        executeRequest(request).close();
     }
 
     @Override
@@ -156,7 +156,7 @@ public class KittyRequests extends RequestManager implements IKitty {
         String body = gson.toJson(new FavoriteInfo(favoriteInfo -> favoriteInfo.setImageId(imageId)));
         RequestBody requestBody = RequestBody.create(JSON, body);
         Request request = getBuilderWithDefaultHeaders(urlFavourites).post(requestBody).build();
-        executeRequest(request);
+        executeRequest(request).close();
     }
 
     @Override
@@ -180,6 +180,6 @@ public class KittyRequests extends RequestManager implements IKitty {
         HttpUrl urlFavourite = Objects.requireNonNull(HttpUrl.parse(String.format("%s/%s",
                 propertiesUtil.getValueByKey("kittyFavouritesUrl"), favouriteId)));
         Request request = getBuilderWithDefaultHeaders(urlFavourite).delete().build();
-        executeRequest(request);
+        executeRequest(request).close();
     }
 }

@@ -20,20 +20,18 @@ public class FileUtils {
         logger = LogManager.getLogger(FileUtils.class);
     }
 
-    public static void saveFileFromUrl(String fileUrl, String destinationFile){
+    public static void saveFileFromUrl(String fileUrl, String destinationFile) throws IOException{
         URLConnection connection = getUrlConnection(fileUrl);
-        try {
+        try (InputStream is = connection.getInputStream();
+             OutputStream os = new FileOutputStream(destinationFile)){
             connection.addRequestProperty("User-Agent", propertiesUtil.getValueByKey("userAgentMozilla"));
-            InputStream is = connection.getInputStream();
             destinationFile = String.format("%s%s%s", "kittyPictures",  File.separator, destinationFile);
-            OutputStream os = new FileOutputStream(destinationFile);
+
             byte[] b = new byte[2048];
             int length;
             while ((length = is.read(b)) != -1) {
                 os.write(b, 0, length);
             }
-            is.close();
-            os.close();
         } catch (IOException e) {
             logger.info(String.format("Error in saving file from %s to %s\n%s",
                     fileUrl, destinationFile, Arrays.toString(e.getStackTrace())));

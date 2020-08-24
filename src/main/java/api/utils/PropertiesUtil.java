@@ -1,7 +1,6 @@
 package api.utils;
 
 import api.Enums.PropertyFiles;
-import api.exceptions.NotSpecifiedUserIdentifierException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -11,14 +10,17 @@ import java.util.Arrays;
 import java.util.Properties;
 
 public class PropertiesUtil {
-    private static final Logger logger;
+    protected final Logger logger;
     protected final Properties properties = new Properties();
-    static {
-        BasicConfigurator.configure();
-        logger = LogManager.getLogger(PropertiesUtil.class);
-    }
 
     public PropertiesUtil(final PropertyFiles propertyFile) {
+        this(propertyFile, PropertiesUtil.class);
+    }
+
+    protected <T extends PropertiesUtil> PropertiesUtil(final PropertyFiles propertyFile,
+                                                        Class<T> extender) {
+        BasicConfigurator.configure();
+        logger = LogManager.getLogger(extender);
         try (FileInputStream streamToFile = new FileInputStream(propertyFile.getPath())){
             properties.load(streamToFile);
         } catch (IOException e) {

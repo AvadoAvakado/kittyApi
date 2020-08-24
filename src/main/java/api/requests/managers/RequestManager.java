@@ -46,6 +46,9 @@ public abstract class RequestManager {
 
     /**
      * Method executes request from parameter and returns it's response
+     * ATTENTION: after this method executed, returned Response should be
+     * closed by executing close() method OR passed as parameter to getResponseBody() method
+     * (because there is string() call method in it and this method perform closing)
      * @param request
      * @return
      */
@@ -59,6 +62,7 @@ public abstract class RequestManager {
             }
             return bodyAsString;
         };
+
         Response response = null;
         try {
             response = client.newCall(request).execute();

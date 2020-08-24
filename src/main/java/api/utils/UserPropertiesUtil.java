@@ -11,7 +11,7 @@ public class UserPropertiesUtil extends PropertiesUtil {
     private final PropertyFiles currentFile;
 
     public UserPropertiesUtil() {
-        super(PropertyFiles.USER_PROPERTIES);
+        super(PropertyFiles.USER_PROPERTIES, UserPropertiesUtil.class);
         currentFile = PropertyFiles.USER_PROPERTIES;
     }
 
