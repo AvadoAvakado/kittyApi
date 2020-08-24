@@ -1,7 +1,6 @@
 package api.requests.managers;
 
 import api.Enums.Categories;
-import api.Enums.PropertyFiles;
 import api.exceptions.InvalidUserIdentifierException;
 import api.exceptions.NotSpecifiedUserIdentifierException;
 import api.kittymodels.FavoriteInfo;
@@ -9,98 +8,26 @@ import api.kittymodels.Kitty;
 import api.kittymodels.VoteInfo;
 import api.requests.interfaces.IKitty;
 import api.utils.UserPropertiesUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import api.kittymodels.BreedInfo;
 import okhttp3.*;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import api.utils.PropertiesUtil;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class KittyRequests implements IKitty {
-    private static final Logger logger = LogManager.getLogger(KittyRequests.class.getName());
-    private final static Gson gson = new Gson();
-    private final PropertiesUtil propertiesUtil = new PropertiesUtil(PropertyFiles.API_PROPERTIES);
+public class KittyRequests extends RequestManager implements IKitty {
     private final UserPropertiesUtil userPropertiesUtil = new UserPropertiesUtil();
-    private final OkHttpClient client = new OkHttpClient();
-    private final static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-    private final String userAgent = propertiesUtil.getValueByKey("userAgentMozilla");
     private final String key = propertiesUtil.getValueByKey("kittyAuthenticationKey");
 
-    private Request.Builder getBuilderWithDefaultHeaders(final String url) {
-        return addDefaultHeaders(new Request.Builder().url(url));
+    public KittyRequests() {
+        super(KittyRequests.class);
     }
 
-    private Request.Builder getBuilderWithDefaultHeaders(final HttpUrl httpUrl) {
-        return addDefaultHeaders(new Request.Builder().url(httpUrl));
-    }
-
-    private Request.Builder addDefaultHeaders(Request.Builder builder) {
+    @Override
+    public Request.Builder addDefaultHeaders(Request.Builder builder) {
         return builder.addHeader("x-api-key", key)
                 .addHeader("User-Agent", userAgent);
-    }
-
-    /**
-     * Method executes request from parameter and returns it's response
-     * @param request
-     * @return
-     */
-    private Response executeRequest(final Request request) {
-        Function<Response, String> getBodyHandlingException = (response) -> {
-            String bodyAsString = null;
-            try {
-                bodyAsString = Objects.requireNonNull(response.body(), "Response body is null").string();
-            } catch (IOException e) {
-                logger.warn(String.format("Error in getting response body as string\n%s", Arrays.toString(e.getStackTrace())));
-            }
-            return bodyAsString;
-        };
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-        } catch (IOException e) {
-            logger.warn(String.format("There is an error in executing request\n%s",
-                    Arrays.toString(e.getStackTrace())));
-        }
-        Objects.requireNonNull(response, "Response is null");
-        if (!String.valueOf(response.code()).startsWith("20")) {
-            throw new IllegalStateException(String.format("Response status code: %s\nMessage: %s", response.code(), getBodyHandlingException.apply(response)));
-        }
-        return response;
-    }
-
-    /**
-     * Method returns response's body
-     * @param response
-     * @return
-     */
-    private JsonElement getResponseBody(Response response) {
-        JsonElement body = null;
-        try {
-            body = gson.fromJson(Objects.requireNonNull(response.body()).string(), JsonElement.class);
-        } catch (IOException e) {
-            logger.warn(String.format("There is an error in getting response's body\n%s",
-                    Arrays.toString(e.getStackTrace())));
-        }
-        return body;
-    }
-
-    private JsonArray requireJsonArray(final JsonElement jsonElement) {
-        if (jsonElement instanceof JsonArray) {
-            return jsonElement.getAsJsonArray();
-        } else {
-            throw new IllegalStateException(String.format("%s should be JsonArray", jsonElement.toString()));
-        }
     }
 
     /**
