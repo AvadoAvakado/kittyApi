@@ -1,13 +1,11 @@
 package api.utils;
 
 import api.Enums.PropertyFiles;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -15,13 +13,19 @@ import java.util.Arrays;
 
 public class FileUtils {
     private static final PropertiesUtil propertiesUtil = new PropertiesUtil(PropertyFiles.API_PROPERTIES);
-    private static final Logger logger = LogManager.getLogger(FileUtils.class.getName());
+    private static final Logger logger;
+
+    static {
+        BasicConfigurator.configure();
+        logger = LogManager.getLogger(FileUtils.class);
+    }
 
     public static void saveFileFromUrl(String fileUrl, String destinationFile){
         URLConnection connection = getUrlConnection(fileUrl);
         try {
             connection.addRequestProperty("User-Agent", propertiesUtil.getValueByKey("userAgentMozilla"));
             InputStream is = connection.getInputStream();
+            destinationFile = String.format("%s%s%s", "kittyPictures",  File.separator, destinationFile);
             OutputStream os = new FileOutputStream(destinationFile);
             byte[] b = new byte[2048];
             int length;
@@ -31,7 +35,7 @@ public class FileUtils {
             is.close();
             os.close();
         } catch (IOException e) {
-            logger.warn(String.format("Error in saving file from %s to %s\n%s",
+            logger.info(String.format("Error in saving file from %s to %s\n%s",
                     fileUrl, destinationFile, Arrays.toString(e.getStackTrace())));
         }
     }

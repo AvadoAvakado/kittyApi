@@ -1,14 +1,23 @@
 package api;
 
+import api.Enums.PropertyFiles;
+import api.exceptions.InvalidUserIdentifierException;
+import api.exceptions.NotSpecifiedUserIdentifierException;
+import api.kittymodels.FavoriteInfo;
+import api.kittymodels.Kitty;
+import api.kittymodels.VoteInfo;
 import api.requests.managers.KittyRequests;
+import api.utils.PropertiesUtil;
+import api.utils.UserPropertiesUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.sun.scenario.effect.GaussianShadow;
 import lombok.extern.log4j.Log4j;
-import api.kittymodels.BreedInfo;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 @Log4j
 public class Executor {
@@ -228,15 +237,48 @@ public class Executor {
         saveImage(randomKittyImageUrl, String.format("KittyNum%s.jpg", instance.getKittyImageId(randomKittyObject)));*/
     //}
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotSpecifiedUserIdentifierException, IOException, InvalidUserIdentifierException {
         KittyRequests kittyRequests = new KittyRequests();
-        List<BreedInfo> breedInfos = kittyRequests.getAllBreeds();
-        JsonArray randomKitties = kittyRequests.getListOfRandomKitties(2);
-        List<String> kittiesLinks = StreamSupport.stream(randomKitties.spliterator(), true)
-                .map(kittyRequests::getKittyImageUrl).collect(Collectors.toList());
-        kittiesLinks.forEach((randomKitty) -> {
-            System.out.println("KEKEK = " + randomKitty);
+       //FileUtils.saveFileFromUrl(new Gson().fromJson(kittyRequests.getRandomKitty(), Kitty.class).getUrl(), "aaa.jpg");
+        //List<BreedInfo> breedInfos = kittyRequests.getAllBreeds();
+       // JsonArray randomKitties = kittyRequests.getListOfRandomKitties(2);
+        //JsonElement rk = kittyRequests.getRandomKitty();
+        //kittyRequests.upVote("ckb");
+        //new UserPropertiesUtil().setSubId("Hello _ dudes");
+        //String aa = new UserPropertiesUtil().getSubId();
+        List<VoteInfo> voteInfos = kittyRequests.getVotesList();
+        //kittyRequests.upVote(kittyRequests.getRandomKitty().getUrl());
+        //DELETE
+        voteInfos.forEach(voteInfo -> {
+            String aaa = voteInfo.getSub_id();
+            boolean a2 = voteInfo.getSub_id() != null;
         });
+        //DELETE
+
+        List<VoteInfo> filtered = voteInfos.stream().filter(voteInfo -> voteInfo.getSub_id() != null).collect(Collectors.toList());
+        kittyRequests.deleteVote(filtered.get(0).getId());
+        filtered = voteInfos.stream().filter(voteInfo -> voteInfo.getSub_id() != null).collect(Collectors.toList());
+
+        kittyRequests.deleteVote(voteInfos.get(0).getId());
+        voteInfos = kittyRequests.getVotesList();
+        VoteInfo vvv = voteInfos.stream().filter(voteInfo -> voteInfo.getImage_id().equals("asf2")).findFirst().get();
+        kittyRequests.deleteVote(vvv.getId());
+        voteInfos = kittyRequests.getVotesList();
+        //JsonArray check = kittyRequests.getFavorites();
+
+
+        List<VoteInfo> kittiesWithHats = kittyRequests.getVotesList();
+        VoteInfo statusTwo = kittiesWithHats.stream().filter(voteInfo -> voteInfo.getImage_id().equals("ckb")).findFirst().get();
+        kittyRequests.deleteVote(statusTwo.getId());
+        List<VoteInfo> afterDeleting = kittyRequests.getVotesList();
+        //JsonElement list = kittyRequests.getKittiesByCategory(2, Categories.HATS, Categories.SUNGLASSES);
+        String just = "aa";
+
+        //List<String> kittiesLinks = StreamSupport.stream(randomKitties.spliterator(), true)
+        //        .map(kittyRequests::getKittyImageUrl).collect(Collectors.toList());
+        //kittiesLinks.forEach((randomKitty) -> {
+        //    System.out.println("KEKEK = " + randomKitty);
+        //});
        // JsonElement firstBreedPureJson = breeds.get(0);
         //BreedInfoModel firsBreedFormatted = new Gson().fromJson(firstBreedPureJson, BreedInfoModel.class);
     }
