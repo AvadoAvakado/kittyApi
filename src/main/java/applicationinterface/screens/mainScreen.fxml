@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="applicationinterface.controllers.MainScreenController"
+           prefHeight="400.0" prefWidth="600.0"
+           fx:id="mainScreen"
+           stylesheets="@../styles/mainScreenBackground.css"
+           id="background_image">
+
+    <Label
+            fx:id="title" text="What do you want?" id="outline.label" alignment="TOP_CENTER"
+            stylesheets="@../styles/outline.css"
+    />
+    <HBox
+            fx:id="bottomBar" id="outline.label" alignment="BOTTOM_CENTER"
+            stylesheets="@../styles/outline.css">
+        <StackPane.margin>
+            <Insets bottom="10"/>
+        </StackPane.margin>
+        <Button fx:id="randomKittyButton" text="Random Kitty" onAction="#randomKittyClick" focusTraversable="false"
+                stylesheets="@../styles/buttonBorder.css" styleClass="button"/>
+        <Button fx:id="makeTestButton" text="Take the test" onAction="#makeTestClick" focusTraversable="false"
+                stylesheets="@../styles/buttonBorder.css" styleClass="button"/>
+    </HBox>
+
+    <!-- <stylesheets>
+         <URL
+                 value="/src/main/java/applicationinterface/styles/mainScreenBackground.css"
+         ></URL>
+     </stylesheets> -->
+
+</StackPane>

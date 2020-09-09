@@ -1,4 +1,4 @@
-package api.Enums;
+package api.enums;
 
 import java.io.File;
 

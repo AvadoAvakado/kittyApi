@@ -1,6 +1,6 @@
 package api.utils;
 
-import api.Enums.PropertyFiles;
+import api.enums.PropertyFiles;
 import api.exceptions.NotSpecifiedUserIdentifierException;
 
 import java.io.FileOutputStream;
@@ -9,10 +9,24 @@ import java.util.Base64;
 
 public class UserPropertiesUtil extends PropertiesUtil {
     private final PropertyFiles currentFile;
+    private static volatile UserPropertiesUtil userPropertiesUtilInstance;
 
-    public UserPropertiesUtil() {
+    private UserPropertiesUtil() {
         super(PropertyFiles.USER_PROPERTIES, UserPropertiesUtil.class);
         currentFile = PropertyFiles.USER_PROPERTIES;
+    }
+
+    public static UserPropertiesUtil getUserPropertiesUtil() {
+        UserPropertiesUtil userPropertiesUtil = userPropertiesUtilInstance;
+        if (userPropertiesUtil != null) {
+            return userPropertiesUtil;
+        }
+        synchronized(UserPropertiesUtil.class) {
+            if (userPropertiesUtilInstance == null) {
+                userPropertiesUtilInstance = new UserPropertiesUtil();
+            }
+            return userPropertiesUtilInstance;
+        }
     }
 
     public void setSubId(String subId) throws IOException {

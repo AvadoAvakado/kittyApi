@@ -17,7 +17,7 @@ public class Kitty {
 
     @Getter
     public class Categories {
-        private int id;
+        private String id;
         private String name;
     }
 }

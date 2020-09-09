@@ -1,6 +1,6 @@
 package api.requests.managers;
 
-import api.Enums.Categories;
+import api.enums.Categories;
 import api.exceptions.InvalidUserIdentifierException;
 import api.exceptions.NotSpecifiedUserIdentifierException;
 import api.kittymodels.FavoriteInfo;
@@ -17,10 +17,25 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class KittyRequests extends RequestManager implements IKitty {
-    private final UserPropertiesUtil userPropertiesUtil = new UserPropertiesUtil();
+    private final UserPropertiesUtil userPropertiesUtil = UserPropertiesUtil.getUserPropertiesUtil();
     private final String key = propertiesUtil.getValueByKey("kittyAuthenticationKey");
 
-    public KittyRequests() {
+    private static volatile KittyRequests kittyRequests;
+
+    public static KittyRequests getKittyRequests() {
+        KittyRequests instance = kittyRequests;
+        if (kittyRequests != null) {
+            return instance;
+        }
+        synchronized (KittyRequests.class) {
+            if (kittyRequests == null) {
+                kittyRequests = new KittyRequests();
+            }
+            return kittyRequests;
+        }
+    }
+
+    private KittyRequests() {
         super(KittyRequests.class);
     }
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="applicationinterface.FirstScreenController"
+           prefHeight="400.0" prefWidth="600.0"
+           style="-fx-background-color: #808080;"
+           alignment="BOTTOM_CENTER"
+            fx:id="parentNode">
+    <children>
+        <ImageView fx:id="catImage"
+                   fitHeight="150.0"
+                   fitWidth="200.0"
+                   layoutX="61.0"
+                   layoutY="83.0"
+                   pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image
+                    url="/kittyPictures/appimages/noRandomCatImage.png"
+                    backgroundLoading="true">
+                </Image>
+            </image>
+        </ImageView>
+        <Button fx:id="nextButton" text="Give me a kitty!" alignment="BOTTOM_LEFT" onAction="#showNewKitty"/>
+    </children>
+</StackPane>

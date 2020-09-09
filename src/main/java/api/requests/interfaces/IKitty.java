@@ -1,6 +1,6 @@
 package api.requests.interfaces;
 
-import api.Enums.Categories;
+import api.enums.Categories;
 import api.exceptions.InvalidUserIdentifierException;
 import api.exceptions.NotSpecifiedUserIdentifierException;
 import api.kittymodels.FavoriteInfo;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.stage.Popup?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.stage.PopupWindow?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="applicationinterface.controllers.AuthorizationPopupController"
+            prefHeight="150.0" prefWidth="300.0"
+            minHeight="150.0" minWidth="300.0"
+            maxHeight="150.0" maxWidth="300.0"
+            fx:id="authorizationPopup">
+    <top>
+        <VBox fx:id="topContainer" spacing="10" alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="10" left="5" right="5"/>
+            </BorderPane.margin>
+            <Label fx:id="title" text="Enter your nickname to get access to all features">
+                <font>
+                    <Font size="13"/>
+                </font>
+            </Label>
+            <TextField fx:id="inputField" promptText="Enter your nickname" focusTraversable="false">
+                <font>
+                    <Font size="20"/>
+                </font>
+            </TextField>
+            <Label fx:id="errorMessage" visible="false" textFill="red"/>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox fx:id="bottomBar" spacing="50" alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10"/>
+            </BorderPane.margin>
+            <Button fx:id="confirmButton" text="Confirm" onAction="#clickConfirmButton"/>
+            <Button fx:id="cancelButton" text="Cancel" onAction="#clickCancelButton"/>
+        </HBox>
+    </bottom>
+</BorderPane>

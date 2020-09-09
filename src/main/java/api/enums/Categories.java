@@ -1,4 +1,4 @@
-package api.Enums;
+package api.enums;
 
 public enum Categories {
     BOXES(5),

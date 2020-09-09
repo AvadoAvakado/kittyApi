@@ -1,6 +1,6 @@
 package api.utils;
 
-import api.Enums.PropertyFiles;
+import api.enums.PropertyFiles;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -22,11 +22,10 @@ public class FileUtils {
 
     public static void saveFileFromUrl(String fileUrl, String destinationFile) throws IOException{
         URLConnection connection = getUrlConnection(fileUrl);
+        connection.addRequestProperty("User-Agent", propertiesUtil.getValueByKey("userAgentMozilla"));
+        connection.setDoInput(true);
         try (InputStream is = connection.getInputStream();
              OutputStream os = new FileOutputStream(destinationFile)){
-            connection.addRequestProperty("User-Agent", propertiesUtil.getValueByKey("userAgentMozilla"));
-            destinationFile = String.format("%s%s%s", "kittyPictures",  File.separator, destinationFile);
-
             byte[] b = new byte[2048];
             int length;
             while ((length = is.read(b)) != -1) {
@@ -34,7 +33,7 @@ public class FileUtils {
             }
         } catch (IOException e) {
             logger.info(String.format("Error in saving file from %s to %s\n%s",
-                    fileUrl, destinationFile, Arrays.toString(e.getStackTrace())));
+                    fileUrl, destinationFile, Arrays.toString(e.getStackTrace()).replaceAll("\\),", "),\n")));
         }
     }
 

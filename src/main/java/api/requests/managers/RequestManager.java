@@ -1,6 +1,6 @@
 package api.requests.managers;
 
-import api.Enums.PropertyFiles;
+import api.enums.PropertyFiles;
 import api.utils.PropertiesUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
