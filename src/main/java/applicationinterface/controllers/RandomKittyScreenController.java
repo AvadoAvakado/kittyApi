@@ -1,4 +1,4 @@
-package applicationinterface;
+package applicationinterface.controllers;
 
 import applicationinterface.enums.SavingPath;
 import api.kittymodels.Kitty;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FirstScreenController implements Initializable {
+public class RandomKittyScreenController implements Initializable {
     private static final String pathToDefaultCatImage = "/kittyPictures/appimages/noRandomCatImage.png";
 
     @FXML

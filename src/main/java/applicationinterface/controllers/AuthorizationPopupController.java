@@ -86,12 +86,14 @@ public class AuthorizationPopupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //listener for removing error message if input field value was changed
         inputField.textProperty().addListener((observable, oldValue, newValue) ->
             {
                 if (errorMessage.isVisible()) {
                     errorMessage.setVisible(false);
                 }
             });
+        //clear the input field on popup closing
         authorizationPopupStage.setOnHiding(event -> {
             inputField.setText("");
         });

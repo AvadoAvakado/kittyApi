@@ -1,7 +1,0 @@
-#background_image{
-    -fx-background-image: url("mainScreenBackgroundImage.jpg");
-    -fx-background-repeat: stretch;
-    -fx-background-size: auto;
-    -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, green, 30, 0.5, 0, 0);
-}
