@@ -2,6 +2,7 @@ package applicationinterface.controllers;
 
 import applicationinterface.AppKitty;
 import applicationinterface.SceneManager;
+import applicationinterface.enums.SceneEnum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +27,7 @@ public class AuthorizationPopupController implements Initializable {
         authorizationPopupStage.initOwner(AppKitty.getStage());
         authorizationPopupStage.initModality(Modality.WINDOW_MODAL);
         try {
-            authorizationPopupStage.setScene(new SceneManager().getAuthorizationPopup());
+            authorizationPopupStage.setScene(SceneManager.getInstance().getScene(SceneEnum.AUTHORIZATION_POPUP));
         } catch (IOException e) {
             //todo here should be an callin windows with error message
             System.out.println("Error in showing authorization popup");

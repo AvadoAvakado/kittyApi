@@ -1,0 +1,4 @@
+.blackout{
+    -fx-background-color: #000000;
+    -fx-opacity: 0.5;
+}

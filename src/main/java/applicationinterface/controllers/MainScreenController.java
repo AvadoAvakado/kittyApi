@@ -2,6 +2,7 @@ package applicationinterface.controllers;
 
 import applicationinterface.AppKitty;
 import applicationinterface.SceneManager;
+import applicationinterface.enums.SceneEnum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +24,10 @@ public class MainScreenController {
     public Button makeTestButton;
 
     public void randomKittyClick(ActionEvent event) throws IOException {
-        AppKitty.getStage().setScene(new SceneManager().getFirstScreen());
+        AppKitty
+                .getStage()
+                .setScene(SceneManager.getInstance()
+                        .getScene(SceneEnum.RANDOM_KITTY_SCREEN));
     }
 
     public void makeTestClick(ActionEvent event) {

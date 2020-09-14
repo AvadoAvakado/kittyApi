@@ -1,6 +1,7 @@
 package api.utils;
 
 import api.enums.PropertyFiles;
+import api.exceptions.SavingException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -20,7 +21,7 @@ public class FileUtils {
         logger = LogManager.getLogger(FileUtils.class);
     }
 
-    public static void saveFileFromUrl(String fileUrl, String destinationFile) throws IOException{
+    public static void saveFileFromUrl(String fileUrl, String destinationFile) throws SavingException {
         URLConnection connection = getUrlConnection(fileUrl);
         connection.addRequestProperty("User-Agent", propertiesUtil.getValueByKey("userAgentMozilla"));
         connection.setDoInput(true);

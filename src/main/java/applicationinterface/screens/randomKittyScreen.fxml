@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="applicationinterface.controllers.RandomKittyScreenController"
-           prefHeight="400.0" prefWidth="600.0"
-           style="-fx-background-color: #808080;"
-           alignment="BOTTOM_CENTER"
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="applicationinterface.controllers.RandomKittyScreenController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #808080;"
             fx:id="parentNode">
-    <children>
-        <ImageView fx:id="catImage"
-                   fitHeight="150.0"
-                   fitWidth="200.0"
-                   layoutX="61.0"
-                   layoutY="83.0"
-                   pickOnBounds="true"
-                   preserveRatio="true">
-            <image>
-                <Image
-                    url="/kittyPictures/appimages/noRandomCatImage.png"
-                    backgroundLoading="true">
-                </Image>
-            </image>
-        </ImageView>
-        <Button fx:id="nextButton" text="Give me a kitty!" alignment="BOTTOM_LEFT" onAction="#showNewKitty"/>
-    </children>
-</StackPane>
+    <bottom>
+        <HBox alignment="BOTTOM_CENTER">
+            <Button fx:id="filters" text="Filters" HBox.hgrow="ALWAYS" onAction="#filters"/>
+            <Button fx:id="nextButton" text="Give me a kitty!" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
+            <Button fx:id="save" text="Save" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
+        <BorderPane.margin>
+            <Insets left="70" right="70"/>
+        </BorderPane.margin>
+        </HBox>
+    </bottom>
+    <center>
+        <StackPane>
+            <StackPane fx:id="blurableElements" BorderPane.alignment="BOTTOM_CENTER"
+                stylesheets="@../styles/dropshadow.css" styleClass="pinkShadow">
+                <ImageView fx:id="catImage"
+                           visible="true"
+                           fitHeight="350.0"
+                           fitWidth="200.0"
+                           preserveRatio="true">
+                    <image>
+                        <Image
+                                url="/kittyPictures/appimages/noRandomCatImage.png"
+                                backgroundLoading="true">
+                        </Image>
+                    </image>
+                </ImageView>
+            </StackPane>
+            <Button fx:id="backButton" onAction="#back" StackPane.alignment="TOP_LEFT"
+                    stylesheets="@../styles/arrows.css" styleClass="leftArrow">
+                <StackPane.margin>
+                    <Insets top="5" left="5"/>
+                </StackPane.margin>
+            </Button>
+        </StackPane>
+
+    </center>
+</BorderPane>
