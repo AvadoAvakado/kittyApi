@@ -1,5 +1,6 @@
 package applicationinterface.controllers;
 
+import api.kittymodels.Kitty;
 import api.requests.managers.KittyRequests;
 import api.utils.ExecutorServiceUtil;
 import api.utils.FileUtils;
@@ -10,12 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Effect;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.LogManager;
@@ -33,6 +36,15 @@ public class RandomKittyScreenController implements Initializable {
     private GaussianBlur blur = new GaussianBlur();
     private static ExecutorService executor = ExecutorServiceUtil.getNewExecutor(2);
     private RandomKittyFilterPopupController.Filter currentFilter;
+    private DropShadow pictureShadowEffect = new DropShadow(BlurType.GAUSSIAN, Color.web("rgba(154, 18, 179, 1)"), 10, 0.5, 0, 0);
+    {
+        try {
+            RandomKittyFilterPopupController filterPopupController = SceneManager.getInstance().getController(SceneEnum.RANDOM_KITTY_FILTER_SCREEN);
+            currentFilter = filterPopupController.getCurrentFilter();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
     @FXML
     Button nextButton;
     @FXML
@@ -44,17 +56,26 @@ public class RandomKittyScreenController implements Initializable {
 
     @FXML
     public void showNewKitty(ActionEvent event) {
-        Effect oldEffect = blurableElements.getEffect();
         blurableElements.setEffect(blur);
-        String imageUrl = KittyRequests.getKittyRequests().getRandomKitty().getUrl();
+        String imageUrl = getRandomKittyMatchingFilter(currentFilter).getUrl();
         String kittyImageName = imageUrl.split("/")[imageUrl.split("/").length - 1];
         String pathToKittyImage = String.format("%s%s", RANDOM_KITTY, kittyImageName);
         executor.execute(() -> {
             FileUtils.saveFileFromUrl(imageUrl, pathToKittyImage);
             setCatImage(pathToKittyImage);
-            blurableElements.setEffect(oldEffect);
+            blurableElements.setEffect(pictureShadowEffect);
         });
         executor.execute(() -> deleteImagesExceptNew(pathToKittyImage));
+    }
+
+    private Kitty getRandomKittyMatchingFilter(RandomKittyFilterPopupController.Filter filter) {
+        Kitty kitty;
+        if (filter.equals(RandomKittyFilterPopupController.Filter.getEmptyFilter())) {
+            kitty = KittyRequests.getKittyRequests().getRandomKitty();
+        } else {
+            kitty = KittyRequests.getKittyRequests().getKittiesByCategory(1, filter.getCategory()).get(0);
+        }
+        return kitty;
     }
 
     public static void deleteAllRandomKittiesImages() {
@@ -88,6 +109,7 @@ public class RandomKittyScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bindImageToScreenSize(catImage);
+        blurableElements.setEffect(pictureShadowEffect);
     }
 
     public void back(ActionEvent event) throws IOException {
@@ -96,12 +118,11 @@ public class RandomKittyScreenController implements Initializable {
 
     public void filters(ActionEvent event) {
         RandomKittyFilterPopupController filterPopupController = null;
-                try {
-                    filterPopupController= SceneManager.getInstance().getController(SceneEnum.RANDOM_KITTY_FILTER_SCREEN);
-                }catch (IOException e) {
+        try {
+            filterPopupController = SceneManager.getInstance().getController(SceneEnum.RANDOM_KITTY_FILTER_SCREEN);
+        } catch (IOException e) {
 
-                }
-
+        }
         filterPopupController.showRandomKittyFilterPopup();
         currentFilter = filterPopupController.getCurrentFilter();
         System.out.println(currentFilter.getFilterLabel());

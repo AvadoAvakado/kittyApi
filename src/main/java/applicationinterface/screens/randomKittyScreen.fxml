@@ -12,20 +12,9 @@
             prefHeight="400.0" prefWidth="600.0"
             style="-fx-background-color: #808080;"
             fx:id="parentNode">
-    <bottom>
-        <HBox alignment="BOTTOM_CENTER">
-            <Button fx:id="filters" text="Filters" HBox.hgrow="ALWAYS" onAction="#filters"/>
-            <Button fx:id="nextButton" text="Give me a kitty!" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
-            <Button fx:id="save" text="Save" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
-        <BorderPane.margin>
-            <Insets left="70" right="70"/>
-        </BorderPane.margin>
-        </HBox>
-    </bottom>
     <center>
         <StackPane>
-            <StackPane fx:id="blurableElements" BorderPane.alignment="BOTTOM_CENTER"
-                stylesheets="@../styles/dropshadow.css" styleClass="pinkShadow">
+            <StackPane fx:id="blurableElements" BorderPane.alignment="BOTTOM_CENTER">
                 <ImageView fx:id="catImage"
                            visible="true"
                            fitHeight="350.0"
@@ -46,6 +35,15 @@
                 </StackPane.margin>
             </Button>
         </StackPane>
-
     </center>
+    <bottom>
+        <HBox alignment="BOTTOM_CENTER">
+            <Button fx:id="filters" text="Filters" HBox.hgrow="ALWAYS" onAction="#filters"/>
+            <Button fx:id="nextButton" text="Give me a kitty!" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
+            <Button fx:id="save" text="Save" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
+            <BorderPane.margin>
+                <Insets left="70" right="70"/>
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
 </BorderPane>

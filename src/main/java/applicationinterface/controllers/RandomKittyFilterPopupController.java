@@ -16,6 +16,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -44,11 +45,13 @@ public class RandomKittyFilterPopupController implements Initializable {
 
     @Getter
     static class Filter {
+        @Getter(AccessLevel.NONE)
+        private static Filter emptyFilter;
         private Categories category;
         private String filterLabel;
 
-        private static Filter getEmptyFilter() {
-            return new Filter();
+        static Filter getEmptyFilter() {
+            return emptyFilter == null ? emptyFilter = new Filter() : emptyFilter;
         }
 
         private Filter(Categories category) {
@@ -64,7 +67,9 @@ public class RandomKittyFilterPopupController implements Initializable {
         @Override
         public boolean equals(Object object){
             boolean result = false;
-            if (object instanceof Filter && ((Filter) object).getCategory().equals(this.getCategory())
+            boolean isCategoriesEqual = this.getCategory() == null ? ((Filter) object).getCategory() == null
+                    : this.getCategory().equals(((Filter) object).getCategory());
+            if (object instanceof Filter && isCategoriesEqual
                     && ((Filter) object).getFilterLabel().equals(this.getFilterLabel())) {
                 result = true;
             }
