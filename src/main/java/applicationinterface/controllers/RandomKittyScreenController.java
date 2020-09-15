@@ -32,7 +32,7 @@ import static applicationinterface.enums.SavingPath.RANDOM_KITTY;
 public class RandomKittyScreenController implements Initializable {
     private GaussianBlur blur = new GaussianBlur();
     private static ExecutorService executor = ExecutorServiceUtil.getNewExecutor(2);
-    private String currentFilter;
+    private RandomKittyFilterPopupController.Filter currentFilter;
     @FXML
     Button nextButton;
     @FXML
@@ -101,20 +101,9 @@ public class RandomKittyScreenController implements Initializable {
                 }catch (IOException e) {
 
                 }
-        Stage randomKittyFilterPopupStage;
-            randomKittyFilterPopupStage = new Stage();
-            randomKittyFilterPopupStage.setTitle("Filters");
-            randomKittyFilterPopupStage.initOwner(AppKitty.getStage());
-            randomKittyFilterPopupStage.initModality(Modality.WINDOW_MODAL);
-            try {
-                randomKittyFilterPopupStage.setScene(SceneManager.getInstance().getScene(SceneEnum.RANDOM_KITTY_FILTER_SCREEN));
-            } catch (IOException e) {
-                //todo here should be an callin windows with error message
-                System.out.println("Error in showing filters for random kitties popup\n");
-            }
 
-        randomKittyFilterPopupStage.showAndWait();
+        filterPopupController.showRandomKittyFilterPopup();
         currentFilter = filterPopupController.getCurrentFilter();
-        System.out.println(currentFilter);
+        System.out.println(currentFilter.getFilterLabel());
     }
 }

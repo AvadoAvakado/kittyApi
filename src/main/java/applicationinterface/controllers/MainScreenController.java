@@ -24,8 +24,7 @@ public class MainScreenController {
     public Button makeTestButton;
 
     public void randomKittyClick(ActionEvent event) throws IOException {
-        AppKitty
-                .getStage()
+        AppKitty.getStage()
                 .setScene(SceneManager.getInstance()
                         .getScene(SceneEnum.RANDOM_KITTY_SCREEN));
     }
