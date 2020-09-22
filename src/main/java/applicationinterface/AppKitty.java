@@ -7,8 +7,6 @@ import applicationinterface.enums.SceneEnum;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class AppKitty extends Application {
     public static UserPropertiesUtil userPropertiesUtil = UserPropertiesUtil.getUserPropertiesUtil();
     private static Stage stage;
@@ -25,11 +23,7 @@ public class AppKitty extends Application {
     public void start(Stage primaryStage) {
         stage = primaryStage;
         primaryStage.setTitle("AppKitty");
-        try {
-            primaryStage.setScene(SceneManager.getInstance().getScene(SceneEnum.MAIN_SCREEN));
-        } catch (IOException e) {
-            throw new NullPointerException(e.getMessage());
-        }
+        primaryStage.setScene(SceneManager.getInstance().getScene(SceneEnum.MAIN_SCREEN));
         primaryStage.setOnHiding(event -> {
             RandomKittyScreenController.deleteAllRandomKittiesImages();
             ExecutorServiceUtil.shutdownAllThreadExecutors();

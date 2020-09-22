@@ -26,12 +26,7 @@ public class AuthorizationPopupController implements Initializable {
         authorizationPopupStage.setTitle("Authorization");
         authorizationPopupStage.initOwner(AppKitty.getStage());
         authorizationPopupStage.initModality(Modality.WINDOW_MODAL);
-        try {
-            authorizationPopupStage.setScene(SceneManager.getInstance().getScene(SceneEnum.AUTHORIZATION_POPUP));
-        } catch (IOException e) {
-            //todo here should be an callin windows with error message
-            System.out.println("Error in showing authorization popup");
-        }
+        authorizationPopupStage.setScene(SceneManager.getInstance().getScene(SceneEnum.AUTHORIZATION_POPUP));
     }
 
     @FXML

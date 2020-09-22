@@ -34,6 +34,7 @@ public class RandomKittyFilterPopupController implements Initializable {
     private Filter currentFilter = Filter.getEmptyFilter();
     private List<Filter> filters;
     private List<RadioButton> filtersButton;
+
     {
         filters = Arrays.stream(Categories.values()).map(Filter::new).collect(Collectors.toList());
         filters.add(new Filter());
@@ -65,7 +66,7 @@ public class RandomKittyFilterPopupController implements Initializable {
         }
 
         @Override
-        public boolean equals(Object object){
+        public boolean equals(Object object) {
             boolean result = false;
             boolean isCategoriesEqual = this.getCategory() == null ? ((Filter) object).getCategory() == null
                     : this.getCategory().equals(((Filter) object).getCategory());
@@ -101,18 +102,18 @@ public class RandomKittyFilterPopupController implements Initializable {
     }
 
     public void cancelButtonClick(ActionEvent event) {
-        ((Stage)applyButton.getScene().getWindow()).close();
+        ((Stage) applyButton.getScene().getWindow()).close();
     }
 
     public void applyButtonClick(ActionEvent event) {
-        String currentToggleLabel = ((RadioButton)filtersGroup.getSelectedToggle()).getText();
-        currentFilter = filters.stream().filter(filter -> filter.getFilterLabel().equals(currentToggleLabel)).findFirst().orElseGet(()->{
+        String currentToggleLabel = ((RadioButton) filtersGroup.getSelectedToggle()).getText();
+        currentFilter = filters.stream().filter(filter -> filter.getFilterLabel().equals(currentToggleLabel)).findFirst().orElseGet(() -> {
             //todo do better
             System.out.println("Selected toggle's lable does not match with existing filters");
             return Filter.getEmptyFilter();
         });
         System.out.println(currentFilter.getFilterLabel());
-        ((Stage)applyButton.getScene().getWindow()).close();
+        ((Stage) applyButton.getScene().getWindow()).close();
     }
 
     private void initStageForPopup() {
@@ -120,12 +121,7 @@ public class RandomKittyFilterPopupController implements Initializable {
         randomKittyFilterPopupStage.setTitle("Filters");
         randomKittyFilterPopupStage.initOwner(AppKitty.getStage());
         randomKittyFilterPopupStage.initModality(Modality.WINDOW_MODAL);
-        try {
-            randomKittyFilterPopupStage.setScene(SceneManager.getInstance().getScene(SceneEnum.RANDOM_KITTY_FILTER_SCREEN));
-        } catch (IOException e) {
-            //todo here should be an callin windows with error message
-            System.out.println("Error in showing random kitty filter popup popup");
-        }
+        randomKittyFilterPopupStage.setScene(SceneManager.getInstance().getScene(SceneEnum.RANDOM_KITTY_FILTER_SCREEN));
     }
 
     public void showRandomKittyFilterPopup() {
@@ -151,10 +147,10 @@ public class RandomKittyFilterPopupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        HBox.setMargin(leftColumn, new Insets(0,0,0,SPACING_BETWEEN_COLUMNS));
+        HBox.setMargin(leftColumn, new Insets(0, 0, 0, SPACING_BETWEEN_COLUMNS));
         columnContainer.setSpacing(SPACING_BETWEEN_COLUMNS);
         filtersGroup = new ToggleGroup();
-        int separateNumber = filtersButton.size() % 2 == 1 ? filtersButton.size()/ 2 + 1 : filtersButton.size()/ 2;
+        int separateNumber = filtersButton.size() % 2 == 1 ? filtersButton.size() / 2 + 1 : filtersButton.size() / 2;
         List<RadioButton> buttonsForLeftColumn = filtersButton.subList(0, separateNumber);
         List<RadioButton> buttonsForRightColumn = filtersButton.subList(separateNumber, filtersButton.size());
         fillVBoxWithRadioButtons(leftColumn, buttonsForLeftColumn);
