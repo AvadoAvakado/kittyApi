@@ -10,7 +10,6 @@ import lombok.Data;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class SceneManager {
     private final Map<SceneEnum, SceneData> sceneData = new HashMap<>();

@@ -26,18 +26,19 @@
                 </image>
             </ImageView>
         </StackPane>
+    <HBox alignment="BOTTOM_CENTER">
+        <Button fx:id="filters" text="Filters" HBox.hgrow="ALWAYS" onAction="#filters"/>
+        <Button fx:id="nextButton" text="Give me a kitty!" HBox.hgrow="ALWAYS"
+                onAction="#showNewKitty"/>
+        <Button fx:id="save" text="Save" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
+        <BorderPane.margin>
+            <Insets left="70" right="70"/>
+        </BorderPane.margin>
+    </HBox>
     <Button fx:id="backButton" onAction="#back" StackPane.alignment="TOP_LEFT"
             stylesheets="@../styles/arrows.css" styleClass="leftArrow">
         <StackPane.margin>
             <Insets top="5" left="5"/>
         </StackPane.margin>
     </Button>
-    <HBox alignment="BOTTOM_CENTER">
-        <Button fx:id="filters" text="Filters" HBox.hgrow="ALWAYS" onAction="#filters"/>
-        <Button fx:id="nextButton" text="Give me a kitty!" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
-        <Button fx:id="save" text="Save" HBox.hgrow="ALWAYS" onAction="#showNewKitty"/>
-        <BorderPane.margin>
-            <Insets left="70" right="70"/>
-        </BorderPane.margin>
-    </HBox>
 </StackPane>

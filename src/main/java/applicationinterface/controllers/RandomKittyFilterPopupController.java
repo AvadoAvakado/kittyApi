@@ -112,7 +112,6 @@ public class RandomKittyFilterPopupController implements Initializable {
             System.out.println("Selected toggle's lable does not match with existing filters");
             return Filter.getEmptyFilter();
         });
-        System.out.println(currentFilter.getFilterLabel());
         ((Stage) applyButton.getScene().getWindow()).close();
     }
 

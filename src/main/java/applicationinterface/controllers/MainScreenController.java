@@ -23,10 +23,8 @@ public class MainScreenController {
     @FXML
     public Button makeTestButton;
 
-    public void randomKittyClick(ActionEvent event) throws IOException {
-        AppKitty.getStage()
-                .setScene(SceneManager.getInstance()
-                        .getScene(SceneEnum.RANDOM_KITTY_SCREEN));
+    public void randomKittyClick(ActionEvent event) {
+        AppKitty.setScene(SceneEnum.RANDOM_KITTY_SCREEN);
     }
 
     public void makeTestClick(ActionEvent event) {

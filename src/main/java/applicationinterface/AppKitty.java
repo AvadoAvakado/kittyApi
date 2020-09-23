@@ -2,6 +2,7 @@ package applicationinterface;
 
 import api.utils.ExecutorServiceUtil;
 import api.utils.UserPropertiesUtil;
+import applicationinterface.controllers.PostInitializable;
 import applicationinterface.controllers.RandomKittyScreenController;
 import applicationinterface.enums.SceneEnum;
 import javafx.application.Application;
@@ -13,6 +14,14 @@ public class AppKitty extends Application {
 
     public static Stage getStage() {
         return stage;
+    }
+
+    public static void setScene(SceneEnum sceneEnum) {
+        getStage().setScene(SceneManager.getInstance()
+                        .getScene(sceneEnum));
+        if (SceneManager.getInstance().getController(sceneEnum) instanceof PostInitializable) {
+            ((PostInitializable) SceneManager.getInstance().getController(sceneEnum)).postInitialize();
+        }
     }
 
     public static void main(String[] args) {
