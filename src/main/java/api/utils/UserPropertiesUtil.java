@@ -38,6 +38,16 @@ public class UserPropertiesUtil extends PropertiesUtil {
         }
     }
 
+    public boolean isSubIdInitialized() {
+        boolean isInitialized = true;
+        try {
+            getSubId();
+        } catch (NotSpecifiedUserIdentifierException e) {
+            isInitialized = false;
+        }
+        return isInitialized;
+    }
+
     public String getSubId() throws NotSpecifiedUserIdentifierException {
         String subId = getValueByKey("subId");
         if (subId.isEmpty()) {

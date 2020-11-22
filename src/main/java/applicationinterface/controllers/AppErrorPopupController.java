@@ -9,9 +9,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class AppErrorPopupController {
+public class AppErrorPopupController implements Controller {
     private static final String ERROR_MESSAGE_PATTERN = "Oops, an error has occurred on the %s screen. Please save the logs and send them to the developer";
     private Stage appErrorPopupStage;
     @FXML

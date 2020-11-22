@@ -1,7 +1,6 @@
 package applicationinterface.controllers;
 
 import applicationinterface.AppKitty;
-import applicationinterface.SceneManager;
 import applicationinterface.enums.SceneEnum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
-import java.io.IOException;
-
-public class MainScreenController {
+public class MainScreenController implements Controller {
     @FXML
     public StackPane mainScreen;
     @FXML

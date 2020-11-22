@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AuthorizationPopupController implements Initializable {
+public class AuthorizationPopupController implements Initializable, Controller {
     private static Stage authorizationPopupStage;
     static {
         authorizationPopupStage = new Stage();

@@ -19,14 +19,13 @@ import javafx.stage.Stage;
 import lombok.AccessLevel;
 import lombok.Getter;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class RandomKittyFilterPopupController implements Initializable {
+public class RandomKittyFilterPopupController implements Initializable, Controller {
     private static final String NONE_FILTER_LABEL = "None";
     private static final int SPACING_BETWEEN_COLUMNS = 10;
     private Stage randomKittyFilterPopupStage;

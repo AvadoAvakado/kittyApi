@@ -2,6 +2,7 @@ package applicationinterface;
 
 import api.utils.ExecutorServiceUtil;
 import api.utils.UserPropertiesUtil;
+import applicationinterface.controllers.AuthorizationPopupController;
 import applicationinterface.controllers.PostInitializable;
 import applicationinterface.controllers.RandomKittyScreenController;
 import applicationinterface.enums.SceneEnum;
@@ -38,5 +39,9 @@ public class AppKitty extends Application {
             ExecutorServiceUtil.shutdownAllThreadExecutors();
         });
         primaryStage.show();
+        if (!UserPropertiesUtil.getUserPropertiesUtil().isSubIdInitialized()) {
+            ((AuthorizationPopupController)SceneManager.getInstance().getController(SceneEnum.AUTHORIZATION_POPUP))
+                    .showAuthorizationPopup();
+        }
     }
 }

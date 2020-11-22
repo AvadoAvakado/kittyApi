@@ -29,13 +29,13 @@ import java.util.concurrent.*;
 
 import static applicationinterface.enums.SavingPath.RANDOM_KITTY;
 
-public class RandomKittyScreenController implements Initializable, PostInitializable {
+public class RandomKittyScreenController implements Initializable, PostInitializable, Controller {
     private GaussianBlur blur = new GaussianBlur();
     private static ExecutorService executor = ExecutorServiceUtil.getNewExecutor(2);
     private RandomKittyFilterPopupController.Filter currentFilter;
     private DropShadow pictureShadowEffect = new DropShadow(BlurType.GAUSSIAN, Color.web("rgba(154, 18, 179, 1)"), 10, 0.5, 0, 0);
     {
-        RandomKittyFilterPopupController filterPopupController = SceneManager.getInstance().getController(SceneEnum.RANDOM_KITTY_FILTER_SCREEN);
+        RandomKittyFilterPopupController filterPopupController = SceneManager.getInstance().getController(RandomKittyFilterPopupController.class);
         currentFilter = filterPopupController.getCurrentFilter();
     }
     @FXML
@@ -137,7 +137,7 @@ public class RandomKittyScreenController implements Initializable, PostInitializ
 
     public void filters(ActionEvent event) {
         RandomKittyFilterPopupController filterPopupController;
-        filterPopupController = SceneManager.getInstance().getController(SceneEnum.RANDOM_KITTY_FILTER_SCREEN);
+        filterPopupController = SceneManager.getInstance().getController(RandomKittyFilterPopupController.class);
         filterPopupController.showRandomKittyFilterPopup();
         currentFilter = filterPopupController.getCurrentFilter();
     }
