@@ -11,6 +11,9 @@ import lombok.Data;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * @author AvadoAvakado
+ */
 public class SceneManager {
     private final Map<SceneEnum, SceneData> sceneData = new HashMap<>();
 
