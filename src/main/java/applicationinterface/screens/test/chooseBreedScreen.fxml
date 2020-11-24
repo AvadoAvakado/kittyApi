@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:id="blurableElements"
+           fx:controller="applicationinterface.controllers.test.ChooseBreedScreenController">
+    <Label text="Choose breed" StackPane.alignment="TOP_CENTER">
+        <font>
+            <Font size="26"/>
+        </font>
+        <StackPane.margin>
+            <Insets top="5"/>
+        </StackPane.margin>
+    </Label>
+    <ComboBox StackPane.alignment="TOP_CENTER">
+        <StackPane.margin>
+            <Insets top="40"/>
+        </StackPane.margin>
+    </ComboBox>
+    <HBox minHeight="-Infinity" maxHeight="-Infinity" minWidth="-Infinity" maxWidth="-Infinity"
+          StackPane.alignment="BOTTOM_CENTER" spacing="20">
+        <Button fx:id="saveLogsButton" text="Breed info" onAction="#clickBreedInfoButton"/>
+        <Button fx:id="cancelButton" text="Start"/>
+        <StackPane.margin>
+            <Insets bottom="10"/>
+        </StackPane.margin>
+    </HBox>
+</StackPane>

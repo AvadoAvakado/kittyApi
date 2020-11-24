@@ -12,20 +12,20 @@
            prefHeight="400.0" prefWidth="600.0"
            fx:id="parentNode"
            style="-fx-background-color: #808080;">
-        <StackPane fx:id="blurableElements" StackPane.alignment="BOTTOM_CENTER">
-            <ImageView fx:id="catImage"
-                       visible="true"
-                       fitHeight="350.0"
-                       fitWidth="200.0"
-                       preserveRatio="true">
-                <image>
-                    <Image
-                            url="/kittyPictures/appimages/noRandomCatImage.png"
-                            backgroundLoading="true">
-                    </Image>
-                </image>
-            </ImageView>
-        </StackPane>
+    <StackPane fx:id="blurableElements" StackPane.alignment="BOTTOM_CENTER">
+        <ImageView fx:id="catImage"
+                   visible="true"
+                   fitHeight="350.0"
+                   fitWidth="200.0"
+                   preserveRatio="true">
+            <image>
+                <Image
+                        url="/kittyPictures/appimages/noRandomCatImage.png"
+                        backgroundLoading="true">
+                </Image>
+            </image>
+        </ImageView>
+    </StackPane>
     <HBox alignment="BOTTOM_CENTER">
         <Button fx:id="filters" text="Filters" HBox.hgrow="ALWAYS" onAction="#filters"/>
         <Button fx:id="nextButton" text="Give me a kitty!" HBox.hgrow="ALWAYS"

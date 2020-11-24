@@ -33,7 +33,7 @@ public class AppKitty extends Application {
     public void start(Stage primaryStage) {
         stage = primaryStage;
         primaryStage.setTitle("AppKitty");
-        primaryStage.setScene(SceneManager.getInstance().getScene(SceneEnum.MAIN_SCREEN));
+        setScene(SceneEnum.MAIN_SCREEN);
         primaryStage.setOnHiding(event -> {
             RandomKittyScreenController.deleteAllRandomKittiesImages();
             ExecutorServiceUtil.shutdownAllThreadExecutors();

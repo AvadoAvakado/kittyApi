@@ -1,14 +1,19 @@
 package applicationinterface.controllers;
 
 import applicationinterface.AppKitty;
+import applicationinterface.SceneManager;
+import applicationinterface.controllers.test.ChooseBreedScreenController;
 import applicationinterface.enums.SceneEnum;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 
+
 public class MainScreenController implements Controller {
+    private GaussianBlur blur = new GaussianBlur();
     @FXML
     public StackPane mainScreen;
     @FXML
@@ -25,7 +30,16 @@ public class MainScreenController implements Controller {
     }
 
     public void makeTestClick(ActionEvent event) {
-        //todo find a better way
-        new AuthorizationPopupController().showAuthorizationPopup();
+        blurOn();
+        SceneManager.getInstance().getController(ChooseBreedScreenController.class)
+                .showChooseBreedPopup();
+    }
+
+    public void blurOn() {
+        mainScreen.setEffect(blur);
+    }
+
+    public void blurOff() {
+        mainScreen.setEffect(null);
     }
 }

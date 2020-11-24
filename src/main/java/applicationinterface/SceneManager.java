@@ -41,26 +41,14 @@ public class SceneManager {
 
     public <T extends Controller> T getController(Class<T> controllerClass) {
         SceneEnum sceneEnum = getCorrespondingEnum(controllerClass);
-        if (sceneData.get(sceneEnum) == null || sceneData.get(sceneEnum).getController() == null) {
-            initSceneController(controllerClass);
+        if (sceneData.get(sceneEnum) == null) {
+            initScene(sceneEnum);
         }
-        return (T) sceneData.get(sceneEnum).getController();
+        return (T) sceneData.get(sceneEnum).getLoader().getController();
     }
 
     public Controller getController(SceneEnum sceneEnum) {
         return getController(sceneEnum.getControllerClass());
-    }
-
-    private <T extends Controller> void initSceneController(Class<T> controllerClass) {
-        try {
-            SceneEnum sceneEnum = getCorrespondingEnum(controllerClass);
-            if (sceneData.get(sceneEnum) == null) {
-                initScene(sceneEnum);
-            }
-            sceneData.get(sceneEnum).setController(controllerClass.getConstructor().newInstance());
-        } catch (Exception e) {
-            //todo here should be popup with error
-        }
     }
 
     private <T extends Controller> SceneEnum getCorrespondingEnum(Class<T> controllerClass) {
